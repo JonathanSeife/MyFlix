@@ -27,14 +27,9 @@ mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-app.get("/", (req, res, next) => {
-  res.status(200).json({
-    status: "success",
-    data: {
-      name: "movie_api",
-      version: "1.0.0",
-    },
-  });
+
+app.get("/", (req, res) => {
+  res.send("Welcome to MyFlix APP!)");
 });
 
 //Gets all movies
