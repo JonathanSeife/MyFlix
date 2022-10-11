@@ -238,7 +238,10 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-const port = process.env.PORT || 8080;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log("Listening on Port " + port);
+app.listen(process.env.PORT || 8080, function () {
+  console.log(
+    "Express server listening on port %d in %s mode",
+    this.address().port,
+    app.settings.env
+  );
 });
