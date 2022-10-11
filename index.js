@@ -8,6 +8,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/[myflixdb]", {
   useUnifiedTopology: true,
 });
 
+const cors = require("cors");
+app.use(cors());
+
+const { check, validationResult } = require("express-validator");
+
 const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
@@ -90,16 +95,33 @@ app.get(
 //Add a user
 app.post(
   "/users",
-  passport.authenticate("jwt", { session: false }),
+  [
+    check("Username", "Username is required").isLength({ min: 5 }),
+    check(
+      "Username",
+      "Username contains non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Password", "Password is required").not().isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail(),
+  ],
   (req, res) => {
-    Users.findOne({ Username: req.body.Username })
+    // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
       .then((user) => {
         if (user) {
-          return res.status(400).send(req.body.Username + "already exists");
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday,
           })
@@ -216,6 +238,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-app.listen(8080, () => {
-  console.log("Your app is listening on port 8080.");
+const port = process.env.PORT || 8080;
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });
