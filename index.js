@@ -27,6 +27,15 @@ mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+app.get("/", (req, res, next) => {
+  res.status(200).json({
+    status: "success",
+    data: {
+      name: "movie_api",
+      version: "1.0.0",
+    },
+  });
+});
 
 //Gets all movies
 app.get(
