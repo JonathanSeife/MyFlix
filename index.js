@@ -3,11 +3,6 @@ const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect("process.env.CONNECTION_URI", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
 const { check, validationResult } = require("express-validator");
 
 const express = require("express"),
@@ -26,6 +21,11 @@ app.use(cors());
 let auth = require("./auth.js")(app);
 const passport = require("passport");
 require("./passport.js");
+
+mongoose.connect("process.env.CONNECTION_URI", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //Gets all movies
 app.get(
