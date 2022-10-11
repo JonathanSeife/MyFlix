@@ -8,9 +8,6 @@ mongoose.connect("process.env.CONNECTION_URI", {
   useUnifiedTopology: true,
 });
 
-const cors = require("cors");
-app.use(cors());
-
 const { check, validationResult } = require("express-validator");
 
 const express = require("express"),
@@ -23,6 +20,8 @@ app.use(bodyParser.json());
 app.use(morgan("common"));
 app.use(express.static("public"));
 
+const cors = require("cors");
+app.use(cors());
 // Import and use Passport
 let auth = require("./auth.js")(app);
 const passport = require("passport");
@@ -238,10 +237,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-app.listen(process.env.PORT || 8080, function () {
-  console.log(
-    "Express server listening on port %d in %s mode",
-    this.address().port,
-    app.settings.env
-  );
+const port = process.env.PORT || 8080;
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });
