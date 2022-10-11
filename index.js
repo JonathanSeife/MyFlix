@@ -13,9 +13,9 @@ const express = require("express"),
 
 app.use(bodyParser.json());
 app.use(morgan("common"));
-app.use(express.static("public"));
 
 const cors = require("cors");
+app.use(express.static("public"));
 app.use(cors());
 
 // Import and use Passport

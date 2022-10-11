@@ -52,6 +52,27 @@
 
       <tbody>
         <tr>
+          <td>Login User</td>
+          <td>/login?Username=:Username&Password=:Password</td>
+          <td>POST</td>
+          <td>:Username as name and :Password as password of the user</td>
+          <td>-</td>
+          <td>
+              {
+                  "user": {
+                      "_id": "654546546464546h",
+                      "Username": "NewUser1",
+                      "Password": "ksdfhashdfjhaskdfhasdk",
+                      "Email": "Newuser1@gmail.com",
+                      "Birthday": "1984-10-08T00:00:00.000Z",
+                      "FavoriteMovies": [],
+                      "__v": 0
+                  },
+                  "token": "eksdfhkjashjdkfhalhdfkhajsdhfjkhasdkfashdfkjsdkfaskfhaksjdfhklashfks645sd4f64s6df4"
+              }
+          </td>
+        </tr>
+        <tr>
           <td>Get all movies</td>
           <td>/movies</td>
           <td>GET</td>
@@ -96,11 +117,23 @@
           <td>-</td>
           <td>
             A JSON object holding data about the new user to add, written as
-            follows: { "name" : "John", "favorite movie" : [] }
+            follows: {  
+                        "Username": "Johnturner",
+                        "Password": "password5",
+                        "Email": "johnturner1@gmail.com",
+                        "Birthday": "1984-10-19",
+                      }
+              </td>
+          </tr> : [] }
           </td>
           <td>
             A JSON object holding data about the new user to add, including an
-            ID, written as follows: { "name" : "John", "favorite movie" : [] }
+            ID, written as follows: {  
+              "Username": "Johnturner",
+              "Password": "password5",
+              "Email": "johnturner1@gmail.com",
+              "Birthday": "1984-10-19",
+            }
           </td>
         </tr>
 
